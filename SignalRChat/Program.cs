@@ -1,10 +1,28 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SignalRChat.Areas.Identity.Data;
 using SignalRChat.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("SignalRChatIdentityDbContextConnection");
+
+builder.Services.AddDbContext<ChatIdentityDbContext>(options => {
+	options.UseSqlite(connectionString);
+	SQLitePCL.Batteries.Init();
+});
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+	.AddEntityFrameworkStores<ChatIdentityDbContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.AddAuthorization(options => {
+	options.FallbackPolicy = new AuthorizationPolicyBuilder()
+		.RequireAuthenticatedUser()
+		.Build();
+});
 
 var app = builder.Build();
 
@@ -19,6 +37,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 
