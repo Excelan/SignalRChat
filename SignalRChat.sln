@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRChat", "SignalRChat.csproj", "{C4A977C6-52B0-42AC-98BA-2B993E44E34C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRChat", "SignalRChat\SignalRChat.csproj", "{C4A977C6-52B0-42AC-98BA-2B993E44E34C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRChat.Tests", "..\SignalRChat.Tests\SignalRChat.Tests.csproj", "{1B70A22D-2468-41FE-B5CA-F0499B2E0101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRChat.Tests", "SignalRChat.Tests\SignalRChat.Tests.csproj", "{1B70A22D-2468-41FE-B5CA-F0499B2E0101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
