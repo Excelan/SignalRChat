@@ -1,12 +1,12 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Moq;
+using NSubstitute;
 using NUnit.Framework;
 using SignalRChat.Hubs;
-using NSubstitute;
-using System.Linq;
 
 namespace SignalRChat.Tests
 {
