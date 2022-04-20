@@ -7,7 +7,12 @@ namespace SignalRChat.Hubs
 		internal string MessageMethod { get; } = "ReceiveMessage";
 
 		public async Task SendMessage(string user, string message) {
-			await Clients.All.SendAsync(MessageMethod, user, message);
+			if (Clients?.All == null) {
+				await Task.CompletedTask;
+			} else {
+				await Clients.All.SendAsync(MessageMethod, user, message);
+			}
+			
 		}
 	}
 }

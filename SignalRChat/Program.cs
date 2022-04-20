@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SignalRChat.Areas.Identity.Data;
+using SignalRChat.BackgroundTasks;
 using SignalRChat.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetConnectionString("SignalRChatIdentityDbContextConnection");
 
 builder.Services.AddDbContext<ChatIdentityDbContext>(options => {
@@ -24,6 +26,11 @@ builder.Services.AddAuthorization(options => {
 		.Build();
 });
 
+builder.Services.AddHostedService<ConfigurationNotifierService>();
+builder.Services.AddTransient<INotificationSender, SignalRNotificationSender>();
+builder.Services.AddSingleton<ISystemMessageSender, SignalRSystemMessageSender>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,15 +39,11 @@ if (!app.Environment.IsDevelopment()) {
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthentication(); ;
-
 app.UseAuthorization();
-
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
 
